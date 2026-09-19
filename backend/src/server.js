@@ -50,18 +50,14 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
-
 // MongoDB Connection
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('MongoDB connected successfully');
-
-    app.listen(PORT, () => {
-      console.log(`NovaCart API running on http://localhost:${PORT}`);
-    });
   })
   .catch((error) => {
     console.error('MongoDB connection failed:', error.message);
   });
+
+module.exports = app;
