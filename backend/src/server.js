@@ -57,7 +57,9 @@ mongoose
     console.log('MongoDB connected successfully');
   })
   .catch((error) => {
-    console.error('MongoDB connection failed:', error.message);
+    console.error('========== MONGODB CONNECTION ERROR ==========');
+    console.error('Name:', error.name);
+    console.error('Message:', error.message);
+    console.error('Code:', error.code);
+    console.error('==============================================');
   });
-
-module.exports = app;
