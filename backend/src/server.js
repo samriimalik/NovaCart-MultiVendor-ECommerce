@@ -23,6 +23,41 @@ app.use(
 // JSON Body Parser
 app.use(express.json());
 
+// MongoDB Connection
+let isMongoConnected = false;
+
+const connectDB = async () => {
+  if (isMongoConnected && mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    isMongoConnected = true;
+    console.log('MongoDB connected successfully');
+  } catch (error) {
+    console.error('========== MONGODB CONNECTION ERROR ==========');
+    console.error('Name:', error.name);
+    console.error('Message:', error.message);
+    console.error('Code:', error.code);
+    console.error('==============================================');
+    throw error;
+  }
+};
+
+// Make sure MongoDB is connected before API requests
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'MongoDB connection failed'
+    });
+  }
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api', apiRoutes);
@@ -50,16 +85,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-// MongoDB Connection
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('MongoDB connected successfully');
-  })
-  .catch((error) => {
-    console.error('========== MONGODB CONNECTION ERROR ==========');
-    console.error('Name:', error.name);
-    console.error('Message:', error.message);
-    console.error('Code:', error.code);
-    console.error('==============================================');
+module.exports = app;
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+
+  app.listen(PORT, () => {
+    console.log(`NovaCart API running on http://localhost:${PORT}`);
   });
+}
