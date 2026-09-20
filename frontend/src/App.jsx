@@ -18,6 +18,8 @@ import lipstickImage from "./images/lipstick.jpeg";
 import foundationImage from "./images/foundation.jpeg";
 import iphone17Image from "./images/iphone17.jpeg";
 import catToyImage from "./images/cattoy.jpeg";
+import Register from './Register';
+
 /* =========================
    NAVBAR
 ========================= */
@@ -823,6 +825,19 @@ function Login() {
               : "Sign in"}
 
           </button>
+          <div className="text-center mt-3">
+  <span className="text-muted">
+    Don't have an account?{' '}
+  </span>
+
+  <button
+    type="button"
+    className="btn btn-link p-0"
+    onClick={() => navigate('/register')}
+  >
+    Create Account
+  </button>
+</div>
 
         </form>
 
@@ -2738,6 +2753,8 @@ export default function App() {
             <Login />
           }
         />
+
+       <Route path="/register" element={<Register />} />
 
 
         {/* VENDOR DASHBOARD */}
