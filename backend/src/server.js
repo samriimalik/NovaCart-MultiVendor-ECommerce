@@ -18,9 +18,9 @@ const app = express();
 const allowedOrigins = [
   'https://nova-cart-multi-vendor-e-commerce.vercel.app',
   'https://nova-cart-multi-vendor-e-commerce-qekei220d-samra11.vercel.app',
+  'https://nova-cart-multi-vendor-e-commerce-clhbof027-samra11.vercel.app',
   'http://localhost:5173'
 ];
-
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
